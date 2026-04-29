@@ -1,25 +1,25 @@
-## AGRICARE App
+# AGRICARE App
 
-React Native (Expo) app for maize leaf diagnosis + offline advisory content.
+React Native (Expo) app for maize leaf diagnosis and offline advisory support for farmers.
 
-### Requirements
+---
 
+## 🚀 Features
+- Maize disease diagnosis (camera-based)
+- Offline advisory content
+- Simple farmer-friendly UI
+- Multilingual support (if included in your app)
+
+---
+
+## 📦 Requirements
 - Node.js (LTS recommended)
-- npm
+- npm or yarn
+- Expo CLI (if using Expo)
 
-### Install
+---
+
+## ⚙️ Installation
 
 ```bash
 npm install
-```
-
-### Run
-
-```bash
-npm start
-```
-
-### Notes
-
-- `node_modules/` and `.expo/` are generated and should not be committed.
-- The previous on-device AI/model integration has been removed so a new integration can be added cleanly.
