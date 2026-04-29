@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "agricare-app",
+    "slug": "agricare-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/maize-plant-icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/maize-plant-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/maize-plant-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/maize-plant-icon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/maize-plant-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "AGRICARE needs access to your photos so you can select maize leaf pictures.",
+          "cameraPermission": "AGRICARE needs the camera to photograph maize leaves for diagnosis."
+        }
+      ]
+    ]
+  }
+}
