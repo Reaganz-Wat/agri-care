@@ -4,6 +4,8 @@
 import type { AppLanguage } from '../i18n/types';
 
 export type DiseaseId =
+  | 'common_rust'
+  | 'gray_leaf_spot'
   | 'maize_leaf_blight'
   | 'maize_streak'
   | 'healthy'
@@ -25,6 +27,96 @@ export type DiseaseInfo = {
 };
 
 export const diseases: DiseaseInfo[] = [
+  {
+    id: 'common_rust',
+    en: {
+      name: 'Common rust',
+      shortDescription:
+        'Fungal disease forming reddish-brown pustules on leaf surfaces; spreads quickly in cool, humid conditions.',
+      symptoms: [
+        'Circular to elongated reddish-brown or orange pustules on both sides of the leaf',
+        'Pustules turn dark brown to black as the season progresses',
+        'Heavily infected leaves may yellow and dry out prematurely',
+      ],
+      management: [
+        'Scout fields regularly and act early when pustule counts are rising.',
+        'Ask your agro-dealer for a fungicide labelled for maize rust if infection is severe.',
+        'Remove heavily infected leaves where practical; avoid spreading spores.',
+        'Rotate with non-cereal crops to reduce carry-over.',
+      ],
+      prevention: [
+        'Use certified, rust-tolerant or resistant maize varieties suited to your area.',
+        'Avoid planting in heavily shaded areas that stay wet — good airflow slows spread.',
+        'Scout crops early, especially after cool, rainy spells.',
+      ],
+    },
+    ach: {
+      name: 'Twooyo me rust me maize',
+      shortDescription:
+        'Twooyo me fungus ma keto gweny ma lyel ma coo i bwooyo; gengo oyotoyot ka twooyo ki kidi.',
+      symptoms: [
+        'Gweny ma lek onyo ma bor me lyel onyo ma cas i ŋom bwooyo ki piny',
+        'Gweny odoko ma col mapol ka pur tye ka mede',
+        'Bwooyo ma twooyo tek romo doko yello ki yac oyotoyot',
+      ],
+      management: [
+        'Nen pur nino nino ki tim oyotoyot ka gweny tye ka medde.',
+        'Peny lapur me yat pi fungicide ma tye ki lagam me rust me bel ka twooyo tek.',
+        'Kwany bwooyo ma twooyo tek ka itwero; kip pe teyyo spores.',
+        'Lok bel ki yat ma pe a cereal wek pe twooyo omedi.',
+      ],
+      prevention: [
+        'Ti ki nyig me bel ma oyero, ma gengo rust onyo ma pe maro twooyo.',
+        'Kip pe keto i kabedo ma cito camil ma omel — yom yat oyotoyot.',
+        'Nen pur mapol mapol, mapol mapol ka twooyo ki kidi ki pee.',
+      ],
+    },
+  },
+  {
+    id: 'gray_leaf_spot',
+    en: {
+      name: 'Gray leaf spot',
+      shortDescription:
+        'Fungal disease producing rectangular gray-brown lesions between leaf veins; thrives in warm, humid weather.',
+      symptoms: [
+        'Rectangular, pale gray to tan lesions running parallel between leaf veins',
+        'Lesions may have yellow halos; coalesce in severe cases killing large leaf areas',
+        'Disease progresses upward from lower leaves as the season advances',
+      ],
+      management: [
+        'Remove and destroy heavily infected lower leaves to slow upward spread.',
+        'Ask your agro-dealer for a registered fungicide effective against gray leaf spot.',
+        'Ensure adequate field drainage and avoid dense planting to improve airflow.',
+        'Practice crop rotation with non-host crops.',
+      ],
+      prevention: [
+        'Plant resistant or tolerant varieties recommended for your area.',
+        'Rotate maize with legumes or other non-cereal crops each season.',
+        'Scout lower leaves early in the season, especially in warm, wet conditions.',
+      ],
+    },
+    ach: {
+      name: 'Gray leaf spot me bel',
+      shortDescription:
+        'Twooyo me fungus ma keto gweny ma can ma lyel i kind nyen me bwooyo; dongo ka twooyo ki kidi ki lyeto.',
+      symptoms: [
+        'Gweny ma can, ma lyel onyo ma yello ma cito ki wor i kind nyen me bwooyo',
+        'Gweny romo tye ki ribbe me yello; rwoyo i twooyo tek dok cwer bwooyo mapol',
+        'Twooyo gengo malo ki i bwooyo ma piny ka pur tye ka mede',
+      ],
+      management: [
+        'Kwany ki cwer bwooyo ma piny ma twooyo tek wek gengo ne malo.',
+        'Peny lapur me yat pi fungicide ma keto tic i gray leaf spot.',
+        'Nen ni pii romo wot maber ki kip pe keto yat mapol wek yom cwiny yom.',
+        'Tim lok yat ki yat ma pe a host.',
+      ],
+      prevention: [
+        'Ket variety ma gengo onyo ma yom cwiny ma kimiyo pi kabedo ni.',
+        'Lok bel ki odi onyo yat mukene ma pe a cereal nino nino.',
+        'Nen bwooyo ma piny mapol mapol i acaki me pur, mapol mapol ka twooyo ki kidi ki pee.',
+      ],
+    },
+  },
   {
     id: 'maize_leaf_blight',
     en: {

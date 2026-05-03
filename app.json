@@ -13,7 +13,8 @@
       "backgroundColor": "#FFFFFF"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.reaganzwat.agricareapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,12 +22,17 @@
         "backgroundColor": "#FFFFFF"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.reaganzwat.agricareapp"
     },
     "web": {
       "favicon": "./assets/maize-plant-icon.png"
     },
     "plugins": [
+      "react-native-fast-tflite",
       [
         "expo-splash-screen",
         {

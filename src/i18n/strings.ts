@@ -61,7 +61,7 @@ const STRINGS = {
       /** Shown above the large disease name after analysis */
       resultMaizeDiseaseLabel: 'Maize disease',
       resultFromAnalysis: 'From analysis of your leaf photo',
-      resultDemoNote: 'Example result until your AI model is connected.',
+      resultDemoNote: 'Analysed on this device using an AI model trained on maize leaf images.',
       resultConfidence: 'Confidence',
       resultAdvisoryLead:
         'Advisory after analysis — for the condition above (symptoms, what to do, and prevention):',
@@ -89,9 +89,9 @@ const STRINGS = {
       offlineHint:
         'Advisory text is shown on the result screen after analysis — stored in the app, no internet needed.',
       offlineOn: 'On',
-      modelTitle: 'Diagnosis (not yet connected)',
+      modelTitle: 'Diagnosis (on-device AI model)',
       modelBody:
-        'Disease check is not connected yet. This version may show a sample result for testing.',
+        'Disease check runs fully on this device using a TFLite model trained on maize leaf images. No internet required.',
       aboutTitle: 'About AGRICARE',
       aboutBody:
         'Helps you spot maize leaf problems from a photo and gives simple advice. Works offline after install.',
@@ -160,7 +160,7 @@ const STRINGS = {
       resultLikely: 'Twooyo ma romo bedo',
       resultMaizeDiseaseLabel: 'Twooyo me bel',
       resultFromAnalysis: 'Ki i neno cal me bwooyo ni',
-      resultDemoNote: 'Kelo me tyen ka model AI pud pe keto.',
+      resultDemoNote: 'Yero ki model AI ma tye i cim ni ma kitye i bwooyo me bel.',
       resultConfidence: 'Gen me neno',
       resultAdvisoryLead:
         'Kony me pur ka dong oromo neno — pi twooyo malu (nyut, ngo me timo, ki gengo):',
@@ -186,9 +186,9 @@ const STRINGS = {
       offlineHint:
         'Lok me pur bino i kelo ka dong oromo neno — tye i app, intanet pe mite.',
       offlineOn: 'Tye',
-      modelTitle: 'Neno twooyo (pud pe kube)',
+      modelTitle: 'Neno twooyo (model AI i cim)',
       modelBody:
-        'Neno twooyo pud pe kube. Kit man romo miyo kelo me tyen pi tem.',
+        'Neno twooyo tiyo ki model TFLite ma tye i cim ni. Intanet pe mite.',
       aboutTitle: 'Makwako AGRICARE',
       aboutBody:
         'Kony me neno twooyo me bwooyo me bel ki cal ki kony mayot. Tye ka tiyo ka app dong oketo — intanet pe mite.',
