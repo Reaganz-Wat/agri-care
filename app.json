@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "agricare-app",
+    "name": "AgriCare",
     "slug": "agricare-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/maize-plant-icon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/maize-plant-icon.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/maize-plant-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "edgeToEdgeEnabled": true,
@@ -29,14 +29,14 @@
       "package": "com.reaganzwat.agricareapp"
     },
     "web": {
-      "favicon": "./assets/maize-plant-icon.png"
+      "favicon": "./assets/icon.png"
     },
     "plugins": [
       "react-native-fast-tflite",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/maize-plant-icon.png",
+          "image": "./assets/icon.png",
           "resizeMode": "contain",
           "backgroundColor": "#FFFFFF"
         }
