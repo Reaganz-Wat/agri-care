@@ -25,7 +25,7 @@ async function getModel(): Promise<TFModel> {
     // a proper file:// URI — Image.resolveAssetSource() returns a bare asset
     // name on Android that java.net.URL rejects as having no protocol.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const [asset] = await Asset.loadAsync(require('../../assets/mobilenet1_converted.tflite'));
+    const [asset] = await Asset.loadAsync(require('../../assets/mv3_model_converted.tflite'));
     if (!asset.localUri) throw new Error('Could not resolve model asset to local URI');
     _model = await loadTensorflowModel({ url: asset.localUri }, []);
   }
@@ -58,12 +58,14 @@ export async function runDiagnosis(imageUri: string): Promise<DiagnosisResult> {
 
   const { data: rgba } = jpeg.decode(bytes.buffer, { useTArray: true });
 
-  // Build flat Float32Array [R,G,B, R,G,B, ...] normalised to [0, 1]
+  // Build flat Float32Array [R,G,B, R,G,B, ...] in raw [0, 255] range.
+  // The MobileNetV3Large model has a built-in Rescaling layer (include_preprocessing=True)
+  // that handles normalisation internally — do NOT divide by 255 here.
   const pixels = new Float32Array(MODEL_INPUT_SIZE * MODEL_INPUT_SIZE * 3);
   for (let i = 0; i < MODEL_INPUT_SIZE * MODEL_INPUT_SIZE; i++) {
-    pixels[i * 3]     = rgba[i * 4]     / 255;
-    pixels[i * 3 + 1] = rgba[i * 4 + 1] / 255;
-    pixels[i * 3 + 2] = rgba[i * 4 + 2] / 255;
+    pixels[i * 3]     = rgba[i * 4];
+    pixels[i * 3 + 1] = rgba[i * 4 + 1];
+    pixels[i * 3 + 2] = rgba[i * 4 + 2];
   }
 
   // run() accepts ArrayBuffer[]; use pixels.buffer to get the underlying ArrayBuffer

@@ -1,29 +1,25 @@
-import { useLayoutEffect, useMemo, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { View, StyleSheet, Alert, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { MaizeCropIcon } from '../../components/MaizeCropIcon';
 import { Screen } from '../../components/Screen';
 import { AppText } from '../../components/AppText';
-import { Card } from '../../components/Card';
 import { PhotoCaptureChoice } from '../../components/PhotoCaptureChoice';
-import { ReadAloudButton } from '../../components/ReadAloudButton';
 import { useLanguage } from '../../i18n/LanguageContext';
 import type { DiagnoseStackParamList } from '../../navigation/types';
-import { speechCapture } from '../../speech/speechScripts';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { spacing, radius } from '../../theme/spacing';
 
 type Props = NativeStackScreenProps<DiagnoseStackParamList, 'Capture'>;
 
 export function CaptureScreen({ navigation }: Props) {
   const { t } = useLanguage();
-  const speechText = useMemo(() => speechCapture(t), [t]);
   const [galleryBusy, setGalleryBusy] = useState(false);
 
   useLayoutEffect(() => {
-    navigation.setOptions({ title: t.diagnose.stackCapture });
-  }, [navigation, t.diagnose.stackCapture]);
+    navigation.setOptions({ title: 'Scan Leaf' });
+  }, [navigation]);
 
   async function ensureLibraryPermission(): Promise<boolean> {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -74,55 +70,85 @@ export function CaptureScreen({ navigation }: Props) {
     }
   }
 
-  const cameraHint =
-    Platform.OS === 'web' ? t.diagnose.webCameraHint : t.diagnose.nativeCameraHint;
+  const hint = Platform.OS === 'web' ? t.diagnose.webCameraHint : t.diagnose.nativeCameraHint;
 
   return (
-    <View style={styles.root}>
-      <Screen scroll contentStyle={styles.scroll}>
-        <AppText variant="title" style={styles.heading}>
-          {t.diagnose.captureHeading}
+    <Screen scroll contentStyle={styles.scroll}>
+      {/* Instruction strip */}
+      <View style={styles.instructionStrip}>
+        <Ionicons name="leaf-outline" size={18} color={colors.primaryMuted} />
+        <AppText style={styles.instructionText}>
+          Fill the frame with a maize leaf in good light for best results
         </AppText>
-        <AppText variant="caption" style={styles.lead}>
-          {t.diagnose.captureLead}
-        </AppText>
+      </View>
 
-        <AppText variant="label" style={styles.chooseLabel}>
-          {t.diagnose.captureChooseMethod}
-        </AppText>
+      {/* Camera & gallery choice */}
+      <PhotoCaptureChoice
+        onCamera={takePhoto}
+        onGallery={pickFromGallery}
+        galleryLoading={galleryBusy}
+      />
 
-        <PhotoCaptureChoice
-          onCamera={takePhoto}
-          onGallery={pickFromGallery}
-          galleryLoading={galleryBusy}
+      {/* Hint card */}
+      <View style={styles.hintCard}>
+        <Ionicons
+          name={Platform.OS === 'web' ? 'desktop-outline' : 'sunny-outline'}
+          size={18}
+          color={colors.warning}
         />
+        <AppText style={styles.hintText}>{hint}</AppText>
+      </View>
 
-        <Card style={styles.card}>
-          <View style={styles.row}>
-            <MaizeCropIcon size={36} />
-            <AppText variant="body" style={styles.cardText}>
-              {cameraHint}
-            </AppText>
-          </View>
-        </Card>
-
-        <AppText variant="caption" style={styles.note}>
-          {t.diagnose.captureNote}
-        </AppText>
-      </Screen>
-      <ReadAloudButton text={speechText} />
-    </View>
+      <AppText style={styles.note}>{t.diagnose.captureNote}</AppText>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.background },
-  scroll: { paddingBottom: 120 },
-  heading: { marginBottom: spacing.xs },
-  lead: { marginBottom: spacing.md },
-  chooseLabel: { marginBottom: spacing.sm },
-  card: { marginTop: spacing.lg, backgroundColor: colors.accent },
-  row: { flexDirection: 'row', gap: spacing.md, alignItems: 'flex-start' },
-  cardText: { flex: 1 },
-  note: { marginTop: spacing.lg, textAlign: 'center' },
+  scroll: {
+    paddingTop: spacing.md,
+    paddingBottom: spacing.xxl,
+  },
+  instructionStrip: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.sm,
+    backgroundColor: colors.accent,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    marginBottom: spacing.lg,
+    borderWidth: 1,
+    borderColor: colors.primaryMuted,
+  },
+  instructionText: {
+    flex: 1,
+    fontSize: 14,
+    color: colors.primaryDark,
+    lineHeight: 20,
+    fontWeight: '500',
+  },
+  hintCard: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.sm,
+    backgroundColor: '#FFFBEB',
+    borderRadius: radius.md,
+    padding: spacing.md,
+    marginTop: spacing.lg,
+    borderWidth: 1,
+    borderColor: '#FDE68A',
+  },
+  hintText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#92400E',
+    lineHeight: 19,
+  },
+  note: {
+    marginTop: spacing.md,
+    fontSize: 12,
+    color: colors.textMuted,
+    textAlign: 'center',
+    lineHeight: 17,
+  },
 });

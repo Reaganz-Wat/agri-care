@@ -1,6 +1,8 @@
-import { useLayoutEffect, useMemo } from 'react';
+import { useLayoutEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { MaizeCropIcon } from '../../components/MaizeCropIcon';
 import { Screen } from '../../components/Screen';
@@ -8,10 +10,9 @@ import { AppText } from '../../components/AppText';
 import { Card } from '../../components/Card';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { OutlineButton } from '../../components/OutlineButton';
-import { ReadAloudButton } from '../../components/ReadAloudButton';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { speechResult } from '../../speech/speechScripts';
 import type { DiagnoseStackParamList } from '../../navigation/types';
+import type { RootTabParamList } from '../../navigation/types';
 import { getDiseaseById, getDiseaseCopy } from '../../data/diseases';
 import { colors } from '../../theme/colors';
 import { spacing, radius } from '../../theme/spacing';
@@ -36,28 +37,27 @@ function BulletList({ lines }: { lines: string[] }) {
 export function ResultScreen({ route, navigation: stackNavigation }: Props) {
   const { imageUri, diseaseId, confidence } = route.params;
   const { t, language } = useLanguage();
+  const rootNavigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+
   const record = getDiseaseById(diseaseId);
   const copy = record ? getDiseaseCopy(record, language) : null;
   const diseaseTitle = copy?.name ?? diseaseId;
+  const acholiName = record?.ach.name;
 
   useLayoutEffect(() => {
-    stackNavigation.setOptions({
-      title: diseaseTitle,
-    });
+    stackNavigation.setOptions({ title: diseaseTitle });
   }, [stackNavigation, diseaseTitle]);
 
   const pct = Math.round(confidence * 100);
-  const speechText = useMemo(
-    () => speechResult(t, diseaseTitle, copy, pct),
-    [t, diseaseTitle, copy, pct],
-  );
+  const isHealthy = diseaseId === 'healthy';
 
   return (
-    <View style={styles.root}>
-      <Screen scroll contentStyle={styles.scroll}>
+    <Screen scroll contentStyle={styles.scroll}>
+      {/* Captured photo */}
       <Image source={{ uri: imageUri }} style={styles.photo} resizeMode="cover" />
 
-      <View style={styles.diseaseBanner}>
+      {/* Disease banner */}
+      <View style={[styles.diseaseBanner, isHealthy && styles.diseaseBannerHealthy]}>
         <View style={styles.bannerTop}>
           <View style={styles.bannerIconWrap}>
             <MaizeCropIcon size={44} noShadow />
@@ -67,6 +67,12 @@ export function ResultScreen({ route, navigation: stackNavigation }: Props) {
             <AppText style={styles.bannerDiseaseName} numberOfLines={4}>
               {diseaseTitle}
             </AppText>
+            {acholiName && acholiName !== diseaseTitle ? (
+              <View style={styles.acholiTag}>
+                <AppText style={styles.acholiLabel}>Leb Acholi: </AppText>
+                <AppText style={styles.acholiName}>{acholiName}</AppText>
+              </View>
+            ) : null}
             {copy ? (
               <AppText style={styles.bannerSubtitle} numberOfLines={3}>
                 {copy.shortDescription}
@@ -78,21 +84,21 @@ export function ResultScreen({ route, navigation: stackNavigation }: Props) {
 
         <View style={styles.bannerDivider} />
 
+        {/* Confidence meter */}
         <View style={styles.confidenceBlock}>
           <View style={styles.badgeRow}>
-            <Ionicons name="analytics" size={18} color="rgba(255,255,255,0.95)" />
+            <Ionicons name="analytics" size={16} color="rgba(255,255,255,0.9)" />
             <AppText style={styles.confidenceLabel}>{t.diagnose.resultLikely}</AppText>
+            <AppText style={styles.confidencePct}>{pct}%</AppText>
           </View>
           <View style={styles.meter}>
-            <View style={[styles.meterFill, { width: `${pct}%` }]} />
+            <View style={[styles.meterFill, { width: `${pct}%` as `${number}%` }]} />
           </View>
-          <AppText style={styles.confidencePct}>
-            {t.diagnose.resultConfidence} ({t.diagnose.forLayoutOnly}): {pct}%
-          </AppText>
           <AppText style={styles.demoNote}>{t.diagnose.resultDemoNote}</AppText>
         </View>
       </View>
 
+      {/* Advisory sections */}
       {copy ? (
         <>
           <AppText variant="subtitle" style={styles.advisoryLead}>
@@ -120,9 +126,10 @@ export function ResultScreen({ route, navigation: stackNavigation }: Props) {
         </>
       ) : null}
 
+      {/* Actions */}
       <View style={styles.resultActions}>
         <PrimaryButton
-          title={t.diagnose.resultStartNewDiagnosis}
+          title="Scan Another Leaf"
           icon="camera"
           onPress={() =>
             stackNavigation.reset({
@@ -132,27 +139,26 @@ export function ResultScreen({ route, navigation: stackNavigation }: Props) {
           }
         />
         <OutlineButton
-          title={t.diagnose.resultBackToDiagnoseHome}
+          title="Back to Home"
           icon="home-outline"
-          onPress={() => stackNavigation.popToTop()}
+          onPress={() => rootNavigation.navigate('Home')}
         />
       </View>
-      </Screen>
-      <ReadAloudButton text={speechText} />
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.background },
   scroll: { paddingBottom: 96 },
+
   photo: {
     width: '100%',
-    height: 200,
+    height: 210,
     borderRadius: radius.lg,
     marginBottom: spacing.md,
     backgroundColor: colors.border,
   },
+
   diseaseBanner: {
     backgroundColor: colors.primaryDark,
     borderRadius: radius.lg,
@@ -161,6 +167,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.primaryMuted,
   },
+  diseaseBannerHealthy: {
+    backgroundColor: '#166534',
+    borderColor: '#4ADE80',
+  },
+
   bannerTop: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
   bannerIconWrap: {
     width: 56,
@@ -169,13 +180,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.35)',
+    flexShrink: 0,
   },
   bannerTextCol: { flex: 1, minWidth: 0 },
   bannerKicker: {
-    color: 'rgba(255,255,255,0.85)',
-    fontSize: 13,
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 11,
     fontWeight: '700',
     letterSpacing: 1.2,
     textTransform: 'uppercase',
@@ -183,62 +193,87 @@ const styles = StyleSheet.create({
   },
   bannerDiseaseName: {
     color: '#fff',
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: '800',
-    lineHeight: 32,
-    marginBottom: spacing.sm,
+    lineHeight: 30,
+    marginBottom: spacing.xs,
   },
-  bannerSubtitle: {
-    color: 'rgba(255,255,255,0.92)',
-    fontSize: 15,
-    lineHeight: 22,
-    marginBottom: spacing.sm,
+  acholiTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginBottom: spacing.xs,
   },
-  bannerMeta: {
-    color: 'rgba(255,255,255,0.75)',
-    fontSize: 13,
+  acholiLabel: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 12,
     fontStyle: 'italic',
   },
+  acholiName: {
+    color: 'rgba(255,255,255,0.88)',
+    fontSize: 13,
+    fontWeight: '600',
+    fontStyle: 'italic',
+  },
+  bannerSubtitle: {
+    color: 'rgba(255,255,255,0.88)',
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: spacing.xs,
+  },
+  bannerMeta: {
+    color: 'rgba(255,255,255,0.65)',
+    fontSize: 12,
+    fontStyle: 'italic',
+  },
+
   bannerDivider: {
-    height: 1,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: 'rgba(255,255,255,0.25)',
     marginVertical: spacing.md,
   },
+
   confidenceBlock: { gap: spacing.xs },
-  badgeRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  badgeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
   confidenceLabel: {
-    color: 'rgba(255,255,255,0.95)',
-    fontSize: 14,
+    flex: 1,
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 13,
     fontWeight: '600',
   },
+  confidencePct: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '800',
+  },
   meter: {
-    height: 10,
+    height: 8,
     borderRadius: radius.full,
-    backgroundColor: 'rgba(255,255,255,0.25)',
+    backgroundColor: 'rgba(255,255,255,0.22)',
     overflow: 'hidden',
-    marginTop: spacing.xs,
   },
   meterFill: {
     height: '100%',
     borderRadius: radius.full,
     backgroundColor: colors.accent,
   },
-  confidencePct: {
-    color: 'rgba(255,255,255,0.9)',
-    fontSize: 13,
+  demoNote: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 11,
+    fontStyle: 'italic',
     marginTop: spacing.xs,
   },
-  demoNote: {
-    color: 'rgba(255,255,255,0.7)',
-    fontSize: 12,
-    fontStyle: 'italic',
-    marginTop: spacing.sm,
-  },
+
   advisoryLead: { marginBottom: spacing.md },
   sectionCard: { marginBottom: spacing.md },
   bulletRow: { flexDirection: 'row', marginTop: spacing.sm, gap: spacing.sm },
   bullet: { width: 16 },
   bulletText: { flex: 1 },
   disclaimer: { marginBottom: spacing.lg, fontStyle: 'italic' },
-  resultActions: { marginTop: spacing.md, gap: spacing.md },
+
+  resultActions: { gap: spacing.md },
 });

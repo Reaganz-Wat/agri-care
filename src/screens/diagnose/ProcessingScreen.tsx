@@ -1,13 +1,11 @@
-import { useState, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { View, StyleSheet, Image, Animated, Easing, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Screen } from '../../components/Screen';
 import { AppText } from '../../components/AppText';
 import { Card } from '../../components/Card';
-import { ReadAloudButton } from '../../components/ReadAloudButton';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { speechProcessing } from '../../speech/speechScripts';
 import type { DiagnoseStackParamList } from '../../navigation/types';
 import { runDiagnosis } from '../../diagnosis/runDiagnosis';
 import { colors } from '../../theme/colors';
@@ -93,7 +91,6 @@ const rowStyles = StyleSheet.create({
 export function ProcessingScreen({ navigation, route }: Props) {
   const { imageUri } = route.params;
   const { t } = useLanguage();
-  const speechText = useMemo(() => speechProcessing(t), [t]);
 
   const [stepIndex, setStepIndex] = useState(0);
   const spin = useRef(new Animated.Value(0)).current;
@@ -148,7 +145,7 @@ export function ProcessingScreen({ navigation, route }: Props) {
         if (cancelled) return;
         const err = e instanceof Error ? e.message : String(e);
         Alert.alert(t.diagnose.diagnosisFailedTitle, `${err}\n\n${t.diagnose.diagnosisFailedMsg}`, [
-          { text: t.diagnose.diagnosisFailedButton, onPress: () => navigation.replace('DiagnoseHome') },
+          { text: t.diagnose.diagnosisFailedButton, onPress: () => navigation.replace('Capture') },
         ]);
       }
     })();
@@ -201,7 +198,6 @@ export function ProcessingScreen({ navigation, route }: Props) {
           </AppText>
         </View>
       </Screen>
-      <ReadAloudButton text={speechText} />
     </View>
   );
 }
