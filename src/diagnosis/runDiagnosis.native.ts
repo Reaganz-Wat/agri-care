@@ -25,7 +25,7 @@ async function getModel(): Promise<TFModel> {
     // a proper file:// URI — Image.resolveAssetSource() returns a bare asset
     // name on Android that java.net.URL rejects as having no protocol.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const [asset] = await Asset.loadAsync(require('../../assets/mv3_model_converted.tflite'));
+    const [asset] = await Asset.loadAsync(require('../../assets/scratch_cnn.tflite'));
     if (!asset.localUri) throw new Error('Could not resolve model asset to local URI');
     _model = await loadTensorflowModel({ url: asset.localUri }, []);
   }
