@@ -7,6 +7,13 @@ import type { DiseaseId } from '../data/diseases';
 
 const MODEL_INPUT_SIZE = 224;
 
+// Below this top-class confidence, or if the top two classes are too close to
+// call, treat the result as unreliable (e.g. green non-leaf surfaces, blurry
+// or poorly framed shots) and fall back to 'not_maize_leaf' so the user is
+// prompted to retake the photo instead of seeing a misleading diagnosis.
+const CONFIDENCE_THRESHOLD = 0.6;
+const MARGIN_THRESHOLD = 0.15;
+
 // Order matches class_labels.txt: Common Rust, Gray Leaf Spot, Healthy, Northern Leaf Blight, Not Maize Leaf
 const CLASS_TO_DISEASE: DiseaseId[] = [
   'common_rust',
@@ -25,7 +32,7 @@ async function getModel(): Promise<TFModel> {
     // a proper file:// URI — Image.resolveAssetSource() returns a bare asset
     // name on Android that java.net.URL rejects as having no protocol.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const [asset] = await Asset.loadAsync(require('../../assets/scratch_cnn.tflite'));
+    const [asset] = await Asset.loadAsync(require('../../assets/eff_2.tflite'));
     if (!asset.localUri) throw new Error('Could not resolve model asset to local URI');
     _model = await loadTensorflowModel({ url: asset.localUri }, []);
   }
@@ -77,12 +84,25 @@ export async function runDiagnosis(imageUri: string): Promise<DiagnosisResult> {
   const probs = Math.abs(scoreSum - 1.0) < 0.1 ? rawScores : softmax(rawScores);
 
   let topIdx = 0;
+  let runnerUpIdx = -1;
   for (let i = 1; i < probs.length; i++) {
-    if (probs[i] > probs[topIdx]) topIdx = i;
+    if (probs[i] > probs[topIdx]) {
+      runnerUpIdx = topIdx;
+      topIdx = i;
+    } else if (runnerUpIdx === -1 || probs[i] > probs[runnerUpIdx]) {
+      runnerUpIdx = i;
+    }
+  }
+
+  const topProb = probs[topIdx];
+  const margin = runnerUpIdx === -1 ? topProb : topProb - probs[runnerUpIdx];
+
+  if (topProb < CONFIDENCE_THRESHOLD || margin < MARGIN_THRESHOLD) {
+    return { diseaseId: 'not_maize_leaf', confidence: topProb };
   }
 
   return {
     diseaseId: CLASS_TO_DISEASE[topIdx] ?? 'not_maize_leaf',
-    confidence: probs[topIdx],
+    confidence: topProb,
   };
 }

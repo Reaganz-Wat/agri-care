@@ -13,6 +13,9 @@ expo-env.d.ts
 # Old local folders (do not commit)
 AI Model/
 
+# Dont commit tflite / AI models
+assets/*.tflite
+
 # Native
 .kotlin/
 *.orig.*
