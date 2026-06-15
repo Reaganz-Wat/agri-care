@@ -67,12 +67,15 @@ const STRINGS = {
       resultFromAnalysis: 'From analysis of your leaf photo',
       resultDemoNote: 'Analysed on this device using an AI model trained on maize leaf images.',
       resultConfidence: 'Confidence',
-      resultAdvisoryLead:
-        'Advisory after analysis — for the condition above (symptoms, what to do, and prevention):',
+      resultAdvisoryLead: 'Advisory for this condition:',
       /** Goes straight to camera / gallery — new photo */
       resultStartNewDiagnosis: 'Start new diagnosis',
       /** Returns to diagnose intro (tips, how it works) */
       resultBackToDiagnoseHome: 'Back to diagnose tips',
+      resultNotMaizeTitle: 'Not a maize leaf',
+      resultNotMaizeMsg:
+        "We couldn't find a maize leaf in this photo. Please try again with a clear, close-up photo of a maize leaf.",
+      resultScanMaizeLeaf: 'Scan a Maize Leaf',
     },
     advice: {
       symptoms: 'Symptoms to look for',
@@ -169,10 +172,13 @@ const STRINGS = {
       resultFromAnalysis: 'Ki i neno cal me bwooyo ni',
       resultDemoNote: 'Yero ki model AI ma tye i cim ni ma kitye i bwooyo me bel.',
       resultConfidence: 'Gen me neno',
-      resultAdvisoryLead:
-        'Kony me pur ka dong oromo neno — pi twooyo malu (nyut, ngo me timo, ki gengo):',
+      resultAdvisoryLead: 'Kony pi twooyo malu:',
       resultStartNewDiagnosis: 'Cak twooyo manyen',
       resultBackToDiagnoseHome: 'Dwogo i nyukc me nong twooyo',
+      resultNotMaizeTitle: 'Pe Oboke Anywagi',
+      resultNotMaizeMsg:
+        'Pe ki nongo bwooyo me bel i cal ni. Mi cal manyen ma nen maber, cok cok, me bwooyo me bel.',
+      resultScanMaizeLeaf: 'Mi Cal Bwooyo me Bel',
     },
     advice: {
       symptoms: 'Nyut me neno',

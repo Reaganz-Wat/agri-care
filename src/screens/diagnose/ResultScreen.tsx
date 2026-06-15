@@ -50,6 +50,39 @@ export function ResultScreen({ route, navigation: stackNavigation }: Props) {
 
   const pct = Math.round(confidence * 100);
   const isHealthy = diseaseId === 'healthy';
+  const isNotMaize = diseaseId === 'not_maize_leaf';
+
+  if (isNotMaize) {
+    return (
+      <Screen scroll contentStyle={styles.scroll}>
+        <Image source={{ uri: imageUri }} style={styles.photo} resizeMode="cover" />
+
+        <View style={styles.notMaizeBanner}>
+          <Ionicons name="alert-circle" size={40} color={colors.primaryDark} />
+          <AppText variant="subtitle" style={styles.notMaizeTitle}>
+            {t.diagnose.resultNotMaizeTitle}
+          </AppText>
+          {acholiName ? (
+            <AppText style={styles.notMaizeAcholi}>{acholiName}</AppText>
+          ) : null}
+          <AppText variant="body" style={styles.notMaizeMsg}>
+            {t.diagnose.resultNotMaizeMsg}
+          </AppText>
+        </View>
+
+        <PrimaryButton
+          title={t.diagnose.resultScanMaizeLeaf}
+          icon="camera"
+          onPress={() =>
+            stackNavigation.reset({
+              index: 0,
+              routes: [{ name: 'Capture' }],
+            })
+          }
+        />
+      </Screen>
+    );
+  }
 
   return (
     <Screen scroll contentStyle={styles.scroll}>
@@ -170,6 +203,28 @@ const styles = StyleSheet.create({
   diseaseBannerHealthy: {
     backgroundColor: '#166534',
     borderColor: '#4ADE80',
+  },
+
+  notMaizeBanner: {
+    alignItems: 'center',
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
+    borderWidth: 2,
+    borderColor: colors.border,
+    padding: spacing.xl,
+    marginBottom: spacing.lg,
+    gap: spacing.xs,
+  },
+  notMaizeTitle: { textAlign: 'center', marginTop: spacing.sm },
+  notMaizeAcholi: {
+    fontStyle: 'italic',
+    color: colors.textMuted,
+    textAlign: 'center',
+  },
+  notMaizeMsg: {
+    textAlign: 'center',
+    color: colors.textMuted,
+    marginTop: spacing.xs,
   },
 
   bannerTop: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
