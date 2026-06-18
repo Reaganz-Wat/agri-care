@@ -30,25 +30,33 @@ export const diseases: DiseaseInfo[] = [
   {
     id: 'common_rust',
     en: {
-      name: 'Common rust',
+      name: 'Common Rust of Maize (Puccinia sorghi)',
       shortDescription:
         'A fungal disease that forms reddish-brown pustules on the leaves and spreads quickly in cool, humid weather.',
       symptoms: [
-        'Reddish-brown to orange pustules on both sides of the leaf',
-        'Pustules darken to black as the season progresses',
+        'Small yellow spots on leaves',
+        'Orange to reddish-brown powdery pustules on both leaf surfaces',
+        'Rust-colored spores that rub off easily when touched',
+        'Yellowing and drying of infected leaves',
+        'Reduced plant growth and yield in severe infections',
       ],
       management: [
-        'Use a fungicide labelled for maize rust if infection is severe',
-        'Remove heavily infected leaves where practical',
-        'Rotate with non-cereal crops',
+        'Plant rust-resistant maize varieties',
+        'Apply recommended fungicides such as Propiconazole or Mancozeb when symptoms appear',
+        'Remove and destroy heavily infected plant residues',
+        'Practice crop rotation with non-host crops',
+        'Monitor fields regularly for early detection',
       ],
       prevention: [
-        'Plant rust-tolerant or resistant maize varieties',
-        'Avoid shaded, poorly ventilated planting sites',
+        'Use certified quality seed',
+        'Plant at the recommended time',
+        'Maintain proper plant spacing for good air circulation',
+        'Keep fields free from weeds and volunteer maize plants',
+        'Maintain good field sanitation by removing crop residues after harvest',
       ],
     },
     ach: {
-      name: 'Twooyo me rust me bel',
+      name: 'Common rust',
       shortDescription:
         'Twooyo me fungus ma keto gweny ma lyel i bwooyo; gengo oyotoyot ka twooyo ki kidi.',
       symptoms: [
@@ -69,25 +77,33 @@ export const diseases: DiseaseInfo[] = [
   {
     id: 'gray_leaf_spot',
     en: {
-      name: 'Gray leaf spot',
+      name: 'Gray Leaf Spot of Maize (Cercospora zeae-maydis)',
       shortDescription:
         'A fungal disease that produces rectangular gray-brown lesions between leaf veins and thrives in warm, humid weather.',
       symptoms: [
-        'Rectangular, pale gray to tan lesions between leaf veins',
-        'Lesions can merge and kill large areas of the leaf in severe cases',
+        'Small gray to tan spots on leaves',
+        'Rectangular lesions that run parallel to leaf veins',
+        'Lesions enlarge and turn gray or brown',
+        'Leaves dry prematurely in severe infections',
+        'Reduced grain yield',
       ],
       management: [
-        'Remove and destroy heavily infected lower leaves',
-        'Apply a fungicide registered for gray leaf spot',
-        'Rotate with non-host crops',
+        'Plant resistant maize varieties',
+        'Apply recommended fungicides when symptoms appear',
+        'Remove and destroy infected crop residues',
+        'Practice crop rotation with non-host crops',
+        'Monitor fields regularly for early detection',
       ],
       prevention: [
-        'Plant resistant or tolerant varieties',
-        'Avoid dense planting to improve airflow',
+        'Use certified quality seed',
+        'Maintain proper plant spacing for good air circulation',
+        'Practice crop rotation',
+        'Keep fields free from weeds and volunteer maize plants',
+        'Maintain good field sanitation after harvest',
       ],
     },
     ach: {
-      name: 'Gray leaf spot me bel',
+      name: 'Gray leaf spot',
       shortDescription:
         'Twooyo me fungus ma keto gweny ma can ma lyel i kind nyen me bwooyo; dongo ka twooyo ki kidi ki lyeto.',
       symptoms: [
@@ -108,25 +124,33 @@ export const diseases: DiseaseInfo[] = [
   {
     id: 'maize_leaf_blight',
     en: {
-      name: 'Maize leaf blight',
+      name: 'Maize Leaf Blight (Northern Leaf Blight - Exserohilum turcicum)',
       shortDescription:
-        'A fungal disease that causes long lesions on leaves and can reduce yield if left untreated.',
+        'A fungal disease that causes long, cigar-shaped lesions on leaves and can reduce yield if left untreated.',
       symptoms: [
-        'Long, cigar-shaped brown or grey lesions on leaves',
-        'Lesions may merge in wet weather',
+        'Long, cigar-shaped grayish-green to brown lesions on leaves',
+        'Lesions enlarge and become tan or brown',
+        'Leaves dry prematurely',
+        'Reduced plant vigor and grain yield',
+        'Severe infections may cause extensive leaf blighting',
       ],
       management: [
-        'Remove badly infected lower leaves where practical',
-        'Apply a fungicide labelled for maize leaf blight',
-        'Rotate with non-cereal crops where possible',
+        'Plant resistant maize varieties',
+        'Apply recommended fungicides when symptoms first appear',
+        'Remove and destroy infected crop residues',
+        'Practice crop rotation with non-host crops',
+        'Monitor fields regularly',
       ],
       prevention: [
-        'Use clean, certified seed',
-        'Avoid overhead irrigation that keeps leaves wet for long periods',
+        'Use certified quality seed',
+        'Maintain proper plant spacing',
+        'Practice crop rotation',
+        'Keep fields free from weeds and volunteer maize plants',
+        'Maintain good field sanitation',
       ],
     },
     ach: {
-      name: 'Blight me bwooyo me bel',
+      name: 'Blight me bwooyo',
       shortDescription:
         'Twooyo me fungus ma keto gweny madongo i bwooyo; romo dwoko bedo me yat ka pe ki keto.',
       symptoms: [
@@ -165,7 +189,7 @@ export const diseases: DiseaseInfo[] = [
       ],
     },
     ach: {
-      name: 'Streak me bel',
+      name: 'Maize Streak',
       shortDescription:
         'Twooyo me virus ma leafhopper gengo; nyuto i bwooyo calo ribbe ma opoto.',
       symptoms: [
@@ -204,7 +228,7 @@ export const diseases: DiseaseInfo[] = [
       ],
     },
     ach: {
-      name: 'MLN (twooyo me bel ma twero keto yat)',
+      name: 'Maize lethal',
       shortDescription:
         'Twooyo me virus ma gengo yat; nyuto i bwooyo calo streak ki yat ma pe romo dong maber.',
       symptoms: [
