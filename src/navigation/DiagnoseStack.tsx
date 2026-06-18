@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { DiagnoseStackParamList } from './types';
-import { DiagnoseHomeScreen } from '../screens/diagnose/DiagnoseHomeScreen';
 import { CaptureScreen } from '../screens/diagnose/CaptureScreen';
 import { ProcessingScreen } from '../screens/diagnose/ProcessingScreen';
 import { ResultScreen } from '../screens/diagnose/ResultScreen';
@@ -17,24 +16,19 @@ export function DiagnoseStack() {
       }}
     >
       <Stack.Screen
-        name="DiagnoseHome"
-        component={DiagnoseHomeScreen}
-        options={{ title: 'Diagnose maize' }}
-      />
-      <Stack.Screen
         name="Capture"
         component={CaptureScreen}
-        options={{ title: 'Take or choose photo' }}
+        options={{ title: 'Scan Leaf' }}
       />
       <Stack.Screen
         name="Processing"
         component={ProcessingScreen}
-        options={{ title: 'Diagnosing leaves…', headerBackVisible: false }}
+        options={{ title: 'Diagnosing…', headerBackVisible: false }}
       />
       <Stack.Screen
         name="Result"
         component={ResultScreen}
-        options={{ title: 'Diagnosis result', headerBackVisible: false }}
+        options={{ title: 'Diagnosis Result', headerBackVisible: false }}
       />
     </Stack.Navigator>
   );

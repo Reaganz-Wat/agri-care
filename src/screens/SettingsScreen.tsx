@@ -1,12 +1,9 @@
-import { useMemo } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Screen } from '../components/Screen';
 import { AppText } from '../components/AppText';
 import { Card } from '../components/Card';
-import { ReadAloudButton } from '../components/ReadAloudButton';
 import { useLanguage } from '../i18n/LanguageContext';
-import { speechSettings } from '../speech/speechScripts';
 import type { AppLanguage } from '../i18n/types';
 import { colors } from '../theme/colors';
 import { spacing, radius } from '../theme/spacing';
@@ -36,7 +33,6 @@ function LangChip({
 
 export function SettingsScreen() {
   const { language, setLanguage, t } = useLanguage();
-  const speechText = useMemo(() => speechSettings(t), [t]);
 
   const setLang = (lang: AppLanguage) => () => setLanguage(lang);
 
@@ -48,9 +44,6 @@ export function SettingsScreen() {
       </AppText>
       <AppText variant="caption" style={styles.sub}>
         {t.settings.sub}
-      </AppText>
-      <AppText variant="caption" style={styles.speechHelp}>
-        {t.settings.speechHelp}
       </AppText>
 
       <Card style={styles.card}>
@@ -101,14 +94,13 @@ export function SettingsScreen() {
         <AppText variant="body">{t.settings.aboutBody}</AppText>
       </Card>
       </Screen>
-      <ReadAloudButton text={speechText} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.background },
-  scroll: { paddingBottom: 96 },
+  scroll: { paddingBottom: 40 },
   h1: { marginBottom: spacing.xs },
   sub: { marginBottom: spacing.sm },
   speechHelp: { marginBottom: spacing.lg, color: colors.primaryDark, fontWeight: '600' },
