@@ -55,21 +55,27 @@ const STRINGS = {
         'On a computer, “Take photo” may not open a camera — use “Choose from gallery” or run the app on your phone.',
       nativeCameraHint: 'Use daylight if you can. Hold steady and fill the frame with the leaf.',
       processingOverlay: 'Diagnosing leaves…',
-      processingTitle: 'Diagnosing leaves',
-      processingSub: 'Please wait while your leaf photo is diagnosed on this device.',
+      processingTitle: 'Diagnosing your leaf',
+      processingSub: 'This runs on your device. No internet needed.',
+      loadingStep1: 'Preparing your image',
+      loadingStep2: 'Loading AI model',
+      loadingStep3: 'Analysing leaf patterns',
+      loadingStep4: 'Reading results',
       resultLikely: 'Likely condition',
       /** Shown above the large disease name after analysis */
       resultMaizeDiseaseLabel: 'Maize disease',
       resultFromAnalysis: 'From analysis of your leaf photo',
-      resultDemoNote: 'Example result until your AI model is connected.',
+      resultDemoNote: 'Analysed on this device using an AI model trained on maize leaf images.',
       resultConfidence: 'Confidence',
-      resultAdvisoryLead:
-        'Advisory after analysis — for the condition above (symptoms, what to do, and prevention):',
+      resultAdvisoryLead: 'Advisory for this condition:',
       /** Goes straight to camera / gallery — new photo */
       resultStartNewDiagnosis: 'Start new diagnosis',
       /** Returns to diagnose intro (tips, how it works) */
       resultBackToDiagnoseHome: 'Back to diagnose tips',
-      forLayoutOnly: 'for layout only',
+      resultNotMaizeTitle: 'Not a maize leaf',
+      resultNotMaizeMsg:
+        "We couldn't find a maize leaf in this photo. Please try again with a clear, close-up photo of a maize leaf.",
+      resultScanMaizeLeaf: 'Scan a Maize Leaf',
     },
     advice: {
       symptoms: 'Symptoms to look for',
@@ -89,9 +95,9 @@ const STRINGS = {
       offlineHint:
         'Advisory text is shown on the result screen after analysis — stored in the app, no internet needed.',
       offlineOn: 'On',
-      modelTitle: 'Diagnosis (not yet connected)',
+      modelTitle: 'Diagnosis (on-device AI model)',
       modelBody:
-        'Disease check is not connected yet. This version may show a sample result for testing.',
+        'Disease check runs fully on this device using a TFLite model trained on maize leaf images. No internet required.',
       aboutTitle: 'About AGRICARE',
       aboutBody:
         'Helps you spot maize leaf problems from a photo and gives simple advice. Works offline after install.',
@@ -155,18 +161,24 @@ const STRINGS = {
         'Ki kompiuta, “Mi cal” pe romo yab camera — ti ki “Yer cal ki gallery” onyo ti ki app i cim.',
       nativeCameraHint: 'Ti ki ceng ka itwero. Muk cal, nen bwooyo i cal.',
       processingOverlay: 'Tye ka twooyo bwooyo…',
-      processingTitle: 'Tye ka twooyo bwooyo',
-      processingSub: 'Kur lee ka twooyo cal me bwooyo tye i cim ni.',
+      processingTitle: 'Tye ka twooyo bwooyo ni',
+      processingSub: 'Tiyo ki cim ni. Intanet pe mite.',
+      loadingStep1: 'Yubo cal mamegi',
+      loadingStep2: 'Cano model AI',
+      loadingStep3: 'Tye ka twooyo bwooyo',
+      loadingStep4: 'Kelo lok me twooyo',
       resultLikely: 'Twooyo ma romo bedo',
       resultMaizeDiseaseLabel: 'Twooyo me bel',
       resultFromAnalysis: 'Ki i neno cal me bwooyo ni',
-      resultDemoNote: 'Kelo me tyen ka model AI pud pe keto.',
+      resultDemoNote: 'Yero ki model AI ma tye i cim ni ma kitye i bwooyo me bel.',
       resultConfidence: 'Gen me neno',
-      resultAdvisoryLead:
-        'Kony me pur ka dong oromo neno — pi twooyo malu (nyut, ngo me timo, ki gengo):',
+      resultAdvisoryLead: 'Kony pi twooyo malu:',
       resultStartNewDiagnosis: 'Cak twooyo manyen',
       resultBackToDiagnoseHome: 'Dwogo i nyukc me nong twooyo',
-      forLayoutOnly: 'pi layout kende',
+      resultNotMaizeTitle: 'Pe Oboke Anywagi',
+      resultNotMaizeMsg:
+        'Pe ki nongo bwooyo me bel i cal ni. Mi cal manyen ma nen maber, cok cok, me bwooyo me bel.',
+      resultScanMaizeLeaf: 'Mi Cal Bwooyo me Bel',
     },
     advice: {
       symptoms: 'Nyut me neno',
@@ -186,9 +198,9 @@ const STRINGS = {
       offlineHint:
         'Lok me pur bino i kelo ka dong oromo neno — tye i app, intanet pe mite.',
       offlineOn: 'Tye',
-      modelTitle: 'Neno twooyo (pud pe kube)',
+      modelTitle: 'Neno twooyo (model AI i cim)',
       modelBody:
-        'Neno twooyo pud pe kube. Kit man romo miyo kelo me tyen pi tem.',
+        'Neno twooyo tiyo ki model TFLite ma tye i cim ni. Intanet pe mite.',
       aboutTitle: 'Makwako AGRICARE',
       aboutBody:
         'Kony me neno twooyo me bwooyo me bel ki cal ki kony mayot. Tye ka tiyo ka app dong oketo — intanet pe mite.',
