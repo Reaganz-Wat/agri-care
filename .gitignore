@@ -14,7 +14,7 @@ expo-env.d.ts
 AI Model/
 
 # Dont commit tflite / AI models
-assets/*.tflite
+# assets/*.tflite
 
 # Native
 .kotlin/
